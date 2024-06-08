@@ -2,7 +2,9 @@ package main
 
 import (
 	// "errors"
-	"fmt"
+	// "fmt"
+	"log"
+	"os"
 	// "os"
 	// "fmt"
 	// "strconv"
@@ -17,17 +19,17 @@ import (
 // }
 
 //funcion con PANIC
-func divide(diviendo, divisor int){
-	//funxion anonima
-	defer func (){
-		if r := recover(); r != nil {
-			fmt.Println(r)
-		}
-	}()
-	// validateZero(divisor)
-	fmt.Println(diviendo/divisor)
-}
-
+// func divide(diviendo, divisor int){
+// 	//funxion anonima
+// 	defer func (){
+// 		if r := recover(); r != nil {
+// 			fmt.Println(r)
+// 		}
+// 	}()
+// 	// validateZero(divisor)
+// 	fmt.Println(diviendo/divisor)
+// }
+//FUNCION PANIC que usamos en la funcion de arriba
 // func validateZero(divisor int){
 // 	if divisor == 0{
 // 		panic("No se puede dividir por cero")
@@ -87,10 +89,35 @@ RECOVER sirve para controlar el panic
 No hace falta hacer la panic manual, como con la funcion validatezero para usar el recover, pero nos sacara otro texto en el error, sin embargo si manejamos el panic nos sacara el texto del error que nosotros queremos*/
 
 	//al utilizar el defer hacemos que se ejcute todo y por ultimo nos saque el error y con el recover capturamos el error y lo manejamos de mejor manera captura el panic y solo no saca la frase del error, sin embargo si dejamos solo el panic nos sacara tambien en las lineas en las que se esta produciendo el error
-	divide(100,10)
-	divide(100,20)
-	divide(100,0)
-	divide(100,300)
+	// divide(100,10)
+	// divide(100,20)
+	// divide(100,0)
+	// divide(100,300)
+
+/*REGISTRO DE ERRORES con el paquete log es para tener un registro de errores mas detallado cpn el dia, la hora y el mensaje*/
+
+log.SetPrefix("main():")
+	file,err := os.OpenFile("Errores.log", os.O_APPEND | os.O_WRONLY, 0644)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	log.SetOutput(file)
+	log.Println("Oye soy un log")
+
+	// log.SetPrefix("main():")
+	// log.Print("Este es un mensaje de error")
+	// error := "este es un error del mail del usuario"
+	// file.Write([]byte (error))
+	// // log.Fatal("Detiene el programa")
+	// log.Println("Este es otro mensaje de error")
+
+
+
+
+
 	
 
 
